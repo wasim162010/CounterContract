@@ -154,3 +154,5 @@ npm install --save mongodb
 npm install --save web3
 
 **NOTE** : Instead of PostgresSQL, this DApp uses MongoDB to log the value changes.
+
+Screenshots: Please view 'Sample screenshots.docx' file for the sample screesnshot.
