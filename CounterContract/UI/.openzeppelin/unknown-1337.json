@@ -1,0 +1,66 @@
+{
+  "manifestVersion": "3.1",
+  "impls": {
+    "46dd8415f80eda3e225e9f6188575d65b0b8399867457d29bc3e2f454f667531": {
+      "address": "0xc0e7104B2C4e717201BDc79e65A1B3fbA839792A",
+      "txHash": "0xd683ae8166c874e2c8a55845bb7398490132f67daad3c94bb9391923086c1256",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Increment",
+            "label": "incVar",
+            "type": "t_uint256",
+            "src": "CounterContract.sol:3"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          }
+        }
+      }
+    },
+    "3338b0c7415d113bf77ac7fbc808f57f14acfc6ae9c60b6fea9fb2c83de1d7cf": {
+      "address": "0xc37b88Be13CD7722136377764ee3F71B3F5F8220",
+      "txHash": "0x9c2c83ede703c56507cb9e25754b3669ee138dbd7c5e9d732bc699bc2799a352",
+      "layout": {
+        "storage": [
+          {
+            "contract": "IncrementV2",
+            "label": "incVar",
+            "type": "t_uint256",
+            "src": "IncrementV2.sol:5"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          }
+        }
+      }
+    },
+    "8ca1f005e987be867b45bc19f029b3e9d381f8faf28d5e35aee1abaec2bf74d3": {
+      "address": "0x485b511deF0EEF363bC422B4dA5df0B16BADb372",
+      "txHash": "0x448292eb5f8386a67442c901e108cadc691757f183c55af8b1aeb8de9bd1a961",
+      "layout": {
+        "storage": [
+          {
+            "contract": "CounterContract",
+            "label": "incVar",
+            "type": "t_uint256",
+            "src": "CounterContract.sol:5"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          }
+        }
+      }
+    }
+  },
+  "admin": {
+    "address": "0x103BA4478c69BbbDEC62fe0E07F9e12035b8e7a9",
+    "txHash": "0x0a4049178a7b602a268f862d58f7efb81092a314de82884848ec73c67ecab8f7"
+  }
+}
