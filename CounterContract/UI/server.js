@@ -31,6 +31,16 @@ app.post('/increment', function(req, res){
     
  });
 
+ app.post('/resetValue', function(req, res){
+
+	var resVal = resetVal();
+	resVal.then(reset => {
+		console.log("value has been reset."); // fetched movies
+		res.end("value has been reset")
+	  });
+    
+ });
+
 app.listen(8081);
 console.log("server is up");
 
@@ -51,18 +61,28 @@ console.log("server is up");
 // }
 
 
-async function insertValue(incrVal){
+async function insertValue(incrVal, taskType){
 
 	try{
-		console.log("insertValue");
+
 		var con = await client.connect();
+		var today = new Date();
+		var time = today.getFullYear() + "-" + today.getMonth()+1 + "-" + today.getDate() + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 		
-	
-		var myobj = { incVal: incrVal};
+
+		if(taskType == "increment") {
+			console.log("increment Value");
+			// var con = await client.connect();
+			// var today = new Date();
+			// var time = today.getFullYear() + "-" + today.getMonth()+1 + "-" + today.getDate() + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 		
-		const result = await con.db("Counter").collection("countercoll").insertOne(myobj);
-	
-	
+			var myobj = { incVal: incrVal, timestamp: time, comment:"Incremented value"};
+			let result = await con.db("Counter").collection("countercoll").insertOne(myobj);
+		
+		} else if(taskType == "reset") {
+			var myobj = { incVal: incrVal, timestamp: time, comment:"Value has been reset to zero."};
+			let result = await con.db("Counter").collection("countercoll").insertOne(myobj);
+		}
 	}catch (e) {
 	
 		console.error(e);
@@ -172,7 +192,7 @@ const contract = new web3.eth.Contract(abi, contAddr)
 
 async function sendT() {
 	
-	var inc = await contract.methods.increment().send({from:'0x181f92EeEabB05Dc04F0C2cbD70753f9ddCa576A'});
+	var inc = await contract.methods.increment().send({from:address});
 	console.log("incremented value is");
 	console.log(inc.events["incrEvent"]["returnValues"]["_value"]); //worked
     var incrVal= inc.events["incrEvent"]["returnValues"]["_value"];
@@ -180,25 +200,26 @@ async function sendT() {
 
 	if(incrVal == 10) {
 		console.log("Calling reset")
-		var resetVal = await contract.methods.reset().send({from:'0x181f92EeEabB05Dc04F0C2cbD70753f9ddCa576A'});
-		insertValue(0);
+		var resetVal = await contract.methods.reset().send({from:address});
+		insertValue(0,"reset");
+	}else {
+		insertValue(incrVal, "increment");
+		console.log("Send completed");
 	}
 	
-    insertValue(incrVal);
-    console.log("Send completed");
 
 } //send ends
 
 
 
 async function resetVal() {
-	if(incrVal == 10) {
+//	if(incrVal == 10) {
 		console.log("Calling reset")
-		var resetVal = await contract.methods.reset().send({from:'0x181f92EeEabB05Dc04F0C2cbD70753f9ddCa576A'});
-	}
-
+		var resetVal = await contract.methods.reset().send({from:address});
+//	}
 } 
- async function currentVal() {
+
+async function currentVal() {
 		console.log("Calling reset")
 		var val=0;
 		await contract.methods.fetchCurrentValue().call(  //working

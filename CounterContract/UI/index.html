@@ -12,7 +12,6 @@
             $("#btn").click(function(event){
                    $.post('/increment', function (data) {
                         console.log("increment called");
-                        console.log(data[0]);
                     });
             });
 
@@ -22,25 +21,14 @@
                     console.log(data);
                     $("#curVal").val(data);
                 });
+            });
 
-                // $.ajax({
-                //         url: '/curValue',
-                //         dataType: 'json',
-                //         type: 'get',
-                //         contentType: 'application/json',
-                //         processData: false,
-                //         success: function( data, textStatus, jQxhr ){
-                //             $('#curVal').html( JSON.stringify( data ) );
-                //         },
-                //         error: function( jqXhr, textStatus, errorThrown ){
-                //             console.log( errorThrown );
-                //         }
-                //     });
-
-
-                
-      });
-
+                $("#resetbtn").click(function(event){
+                    $.post('/resetValue', function (data) {
+                        console.log("resetValue called");
+                        console.log(data);
+                    });                
+                 });
         });
 
     </script>
@@ -64,8 +52,13 @@
         <div> 
             <br/>
             <input type = "button" id = "curbtn" value = "Fetch current value" /> 
-            <input type = "text" id = "curVal" readonly =true  />
+            <input type = "text" id = "curVal" readonly= true  />
         </div>
+        <div> 
+                <br/>
+                <input type = "button" id = "resetbtn" value = "Reset value" /> 
+               
+            </div>
     </div>
     
 
