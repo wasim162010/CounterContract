@@ -76,7 +76,7 @@ async function insertValue(incrVal, taskType){
 
 // ganache url
 const web3 = new Web3("http://127.0.0.1:7545")
-
+//**NOTE** 'address' value should be changed to the address of the account which sends the transaction */
 const address = '0x181f92EeEabB05Dc04F0C2cbD70753f9ddCa576A' 
 // web3.eth.getBalance(address, (err, wei) => { balance = web3.utils.fromWei(wei, 'ether') 
 // 				console.log("balance");
@@ -168,6 +168,7 @@ const abi = [
 	}
 ]
 	
+//**NOTE** 'contAddr' value should be changed to the address of the contract */
 const contAddr = '0xc717092d19E7B4D7035809216f57837bb7ED38b3' //'0x69ff9805bD7B3EC51dc01Dc94dfcd57390b6Cb06'
 const contract = new web3.eth.Contract(abi, contAddr)
 
