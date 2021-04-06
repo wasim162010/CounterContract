@@ -9,13 +9,38 @@
     <script type = "text/javascript" language = "javascript">
         $(document).ready(function() {
 
-            $("#driver").click(function(event){
-               // alert("hello")
+            $("#btn").click(function(event){
                    $.post('/increment', function (data) {
                         console.log("increment called");
-                        console.log("data");
+                        console.log(data[0]);
                     });
             });
+
+            $("#curbtn").click(function(event){
+                $.get('/curValue', function (data) {
+                    console.log("curValue called");
+                    console.log(data);
+                    $("#curVal").val(data);
+                });
+
+                // $.ajax({
+                //         url: '/curValue',
+                //         dataType: 'json',
+                //         type: 'get',
+                //         contentType: 'application/json',
+                //         processData: false,
+                //         success: function( data, textStatus, jQxhr ){
+                //             $('#curVal').html( JSON.stringify( data ) );
+                //         },
+                //         error: function( jqXhr, textStatus, errorThrown ){
+                //             console.log( errorThrown );
+                //         }
+                //     });
+
+
+                
+      });
+
         });
 
     </script>
@@ -33,10 +58,16 @@
 
     <div class="container">
         <div class="jumbotron">
-            <h1>hello...</h1>
+            <h1>Simple DApp for the counter contract</h1>
         </div>
-        <input type = "button" id = "driver" value = "Increment value" />
+        <input type = "button" id = "btn" value = "Increment value" />
+        <div> 
+            <br/>
+            <input type = "button" id = "curbtn" value = "Fetch current value" /> 
+            <input type = "text" id = "curVal" readonly =true  />
+        </div>
     </div>
+    
 
 </body>
 </html>

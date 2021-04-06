@@ -14,41 +14,49 @@ app.get('/', function(req, res) {
 });
 
 app.post('/increment', function(req, res){
-    res.send("incrementing value!");
+   
 	sendT();
+	res.send("incrementing value");
+	
  });
 
-app.get('/reset', function(req, res){
-    res.send("reseting value!");
-    //var resetVal = await contract.methods.reset().send({from:'0x181f92EeEabB05Dc04F0C2cbD70753f9ddCa576A'});
+
+ app.get('/curValue', function(req, res){
+
+	var curVal = currentVal();
+	curVal.then(counterVal => {
+		console.log(counterVal); // fetched movies
+		res.end(counterVal)
+	  });
+    
  });
+
 app.listen(8081);
 console.log("server is up");
 
 
-async function  connectToMongo() {
-	try {
-		// Connect to the MongoDB cluster
-		var conn = await client.connect();
-		console.log("connected");
+// async function  connectToMongo() {
+// 	try {
+// 		// Connect to the MongoDB cluster
+// 		var conn = await client.connect();
+// 		console.log("connected");
 
-		return conn;
+// 		return conn;
 
-	} catch (e) {
-		console.error(e);
-	} finally {
-		await client.close();
-	}
-}
-//connectToMongo();
+// 	} catch (e) {
+// 		console.error(e);
+// 	} finally {
+// 		await client.close();
+// 	}
+// }
+
 
 async function insertValue(incrVal){
 
 	try{
 		console.log("insertValue");
 		var con = await client.connect();
-		//console.log("connected");
-		//var con = connectToMongo();
+		
 	
 		var myobj = { incVal: incrVal};
 		
@@ -58,17 +66,16 @@ async function insertValue(incrVal){
 	}catch (e) {
 	
 		console.error(e);
-	} finally {
-
-		//await client.close();
-	
+	} finally {	
 	}
 
 }
 
 //web3.js code
 
+// ganache url
 const web3 = new Web3("http://127.0.0.1:7545")
+
 const address = '0x181f92EeEabB05Dc04F0C2cbD70753f9ddCa576A' // Your account address goes here
 web3.eth.getBalance(address, (err, wei) => { balance = web3.utils.fromWei(wei, 'ether') 
 				console.log("balance");
@@ -191,13 +198,16 @@ async function resetVal() {
 	}
 
 } 
+ async function currentVal() {
+		console.log("Calling reset")
+		var val=0;
+		await contract.methods.fetchCurrentValue().call(  //working
+				(err, result) => {
+				console.log("current value ")
+				console.log(result)
+				val = result;
+				}
+			)
+		return val;
+} 
 
-contract.methods.fetchCurrentValue().call(  //working
-    (err, result) => {
-	   console.log("current value ")
-	   console.log(result)
-     // console.log(err)
-	}
-	
-
-)
